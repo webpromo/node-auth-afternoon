@@ -26,9 +26,28 @@ class App extends Component {
     });
   }
 
-  login() {
-    alert('set up your login function here')
-  }
+    // login = () => {
+    //   const redirectUri = encodeURIComponent(`${window.location.origin}/callback`);
+    
+    //   window.location = `https://${process.env.REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${process.env.REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${redirectUri}&response_type=code`
+    // }
+
+    
+    login() {
+      // alert("set up your login function here");
+      const { REACT_APP_AUTH0_DOMAIN, REACT_APP_AUTH0_CLIENT_ID } = process.env;
+      const baseUrl = `https://${REACT_APP_AUTH0_DOMAIN}`;
+      const encodedUri = encodeURIComponent(`${window.location.origin}/callback`);
+      const redirectUrl =
+        baseUrl +
+        `/authorize?client_id=${REACT_APP_AUTH0_CLIENT_ID}` +
+        `&scope=openid%20profile%20email` +
+        `&redirect_uri=${encodedUri}` +
+        `&response_type=code`;
+      window.location = redirectUrl;
+    }
+
+
 
   logout() {
     axios.post('/api/logout').then(response => {

@@ -13,6 +13,23 @@ app.use(session({
 }));
 
 app.get('/callback', (req, res) => {
+
+  // const {
+  //   REACT_APP_AUTH0_CLIENT_ID,
+  //   AUTH0_API_CLIENT_SECRET,
+  //   REACT_APP_AUTH0_DOMAIN} = process.env;
+
+  //   let payload = {
+  //     client_id: REACT_APP_AUTH0_CLIENT_ID,
+  //     client_secret: AUTH0_API_CLIENT_SECRET,
+  //     code:req.query.code,
+  //     grant_type: "authorization_code",
+  //     redirect_uri: `http://${req.headers.host}/localhost}/ballback`
+  //   }
+  
+  // let accessToken = await axios.post('https://${REACT_APP_AUTH0_DOMAIN}oauth/token',payload);
+  // let userInfo = await axios.get(`https://${REACT_APP_AUTH0_DOMAIN}/userinfo?access_token=${accessToken}`); 
+
   exchangeCodeForAccessToken()
     .then(exchangeAccessTokenForUserInfo)
     .then(fetchAuth0AccessToken)
@@ -78,7 +95,7 @@ app.get('/callback', (req, res) => {
       res.end()
     }).catch(err => console.log('Error unstarring repo', err));
   });
-  
+
 app.get('/api/user-data', (req, res) => {
   res.status(200).json(req.session.user)
 })
